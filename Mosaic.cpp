@@ -1,11 +1,11 @@
 #include "Mosaic.h"
+#define BROKEN_TILES_SIZE 7
 
 Mosaic::Mosaic() {
     // Allocate memory for 1D arrays
-    int brokenTilesSize = 7;
     this->storage = new char*[MOSAIC_DIM];
     this->grid = new char*[MOSAIC_DIM];
-    this->brokenTiles = new char[brokenTilesSize];
+    this->brokenTiles = new char[BROKEN_TILES_SIZE];
     // Allocate memory for 2D arrays
     for(int i = 0; i < MOSAIC_DIM; ++i) {
         this->storage[i] = new char[MOSAIC_DIM];
