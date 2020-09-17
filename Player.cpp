@@ -29,6 +29,7 @@ void Player::setMosaic(Mosaic mosaic) {
 }
 
 void Player::displayMosaic() {
+    int brokenTilesSize = 7;
     std::cout << "Mosaic for " << this->name << ": " << std::endl; 
     for(int row = 0; row < MOSAIC_DIM; ++row) {
         std::cout << row + 1 << ": ";
@@ -42,7 +43,7 @@ void Player::displayMosaic() {
         std::cout << std::endl;
     }
     std::cout << "broken: ";
-    for(int i = 0; i < 7; ++i) {
+    for(int i = 0; i < brokenTilesSize; ++i) {
         std::cout << mosaic->getBrokenTile(i) << " ";
     }
     std::cout << std::endl;

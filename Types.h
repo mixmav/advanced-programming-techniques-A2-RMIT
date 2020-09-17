@@ -1,5 +1,5 @@
 // Enum list of available tiles
-enum Tiles {
+enum Tile {
     RED = 'R',
     YELLOW = 'Y',
     DARK_BLUE = 'B',

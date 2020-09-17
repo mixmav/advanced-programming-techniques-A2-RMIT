@@ -2,9 +2,10 @@
 
 Mosaic::Mosaic() {
     // Allocate memory for 1D arrays
+    int brokenTilesSize = 7;
     this->storage = new char*[MOSAIC_DIM];
     this->grid = new char*[MOSAIC_DIM];
-    this->brokenTiles = new char[7];
+    this->brokenTiles = new char[brokenTilesSize];
     // Allocate memory for 2D arrays
     for(int i = 0; i < MOSAIC_DIM; ++i) {
         this->storage[i] = new char[MOSAIC_DIM];
@@ -38,15 +39,15 @@ char Mosaic::getBrokenTile(int i) {
     return brokenTiles[i];
 }
 
-void Mosaic::setStorage(Tiles colour, int row, int col) {
+void Mosaic::setStorage(Tile colour, int row, int col) {
     storage[row][col] = colour;
 }
 
-void Mosaic::setGrid(Tiles colour, int row, int col) {
+void Mosaic::setGrid(Tile colour, int row, int col) {
     grid[row][col] = colour;
 }
 
-void Mosaic::setBrokenTile(Tiles tile, int i) {
+void Mosaic::setBrokenTile(Tile tile, int i) {
     brokenTiles[i] = tile;
 }
 
