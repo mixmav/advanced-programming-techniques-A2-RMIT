@@ -6,5 +6,5 @@ enum Tile {
     TILE_LIGHT_BLUE = 'L',
     TILE_BLACK = 'U',
     TILE_FIRST_PLAYER = 'F',
-    TILE_NO_TILE = '.'
+    TILE_NONE = '.'
 };

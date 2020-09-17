@@ -55,7 +55,7 @@ void Mosaic::initArrays() {
     for(int row = 0; row < MOSAIC_DIM; ++row) {
         for(int col = 0; col < MOSAIC_DIM; ++col) {
             if(MOSAIC_DIM - col <= row + 1) {
-                this->storage[row][col] = NO_TILE;
+                this->storage[row][col] = TILE_NONE;
             } else {
                 this->storage[row][col] = ' ';
             }
@@ -63,7 +63,7 @@ void Mosaic::initArrays() {
     }
     for(int row = 0; row < MOSAIC_DIM; ++row) {
         for(int col = 0; col < MOSAIC_DIM; ++col) {
-            this->grid[row][col] = NO_TILE;
+            this->grid[row][col] = TILE_NONE;
         }
     }
 }
