@@ -1,5 +1,4 @@
 #include "Mosaic.h"
-#define BROKEN_TILES_SIZE 7
 
 Mosaic::Mosaic() {
     // Allocate memory for 1D arrays
@@ -49,6 +48,10 @@ void Mosaic::setGrid(Tile colour, int row, int col) {
 
 void Mosaic::setBrokenTile(Tile tile, int i) {
     brokenTiles[i] = tile;
+}
+
+void Mosaic::removeBrokenTile(int i) {
+    brokenTiles[i] = '\0';
 }
 
 void Mosaic::initArrays() {

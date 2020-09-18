@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Player.h"
 #include "Mosaic.h"
-#define BROKEN_TILES_SIZE 7
 
 Player::Player(std::string name) {
     this->name = name;
@@ -17,16 +16,16 @@ std::string Player::getName() {
     return this->name;
 }
 
-Mosaic Player::getMosaic() {
-    return *this->mosaic;
+Mosaic* Player::getMosaic() {
+    return this->mosaic;
 }
 
 void Player::setName(std::string name) {
     this->name = name;
 }
 
-void Player::setMosaic(Mosaic mosaic) {
-    *this->mosaic = mosaic;
+void Player::setMosaic(Mosaic* mosaic) {
+    this->mosaic = mosaic;
 }
 
 void Player::displayMosaic() {

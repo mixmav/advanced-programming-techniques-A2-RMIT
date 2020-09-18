@@ -8,10 +8,10 @@ class Player {
 
         // Getters/Setters
         std::string getName();
-        Mosaic getMosaic();
+        Mosaic* getMosaic();
 
         void setName(std::string name);
-        void setMosaic(Mosaic mosaic);
+        void setMosaic(Mosaic* mosaic);
 
         // Prints out the stored data on selected players mosaic
         void displayMosaic();
