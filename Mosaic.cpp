@@ -50,8 +50,24 @@ void Mosaic::setBrokenTile(Tile tile, int i) {
     brokenTiles[i] = tile;
 }
 
-void Mosaic::removeBrokenTile(int i) {
-    brokenTiles[i] = '\0';
+void Mosaic::addBrokenTile(Tile tile) {
+    for(int i = 0; i < BROKEN_TILES_SIZE; ++i) {
+        if(brokenTiles[i] == '\0') {
+            brokenTiles[i] = tile;
+        }
+    }
+}
+
+void Mosaic::removeBrokenTile(Tile tile) {
+    for(int i = 0; i < BROKEN_TILES_SIZE; ++i) {
+        if(brokenTiles[i] == tile) {
+            brokenTiles[i] = '\0';
+            for(int j = i; j < BROKEN_TILES_SIZE; ++j) {
+                brokenTiles[j] = brokenTiles[j + 1];
+            }
+            i = BROKEN_TILES_SIZE;
+        }
+    }
 }
 
 void Mosaic::initArrays() {

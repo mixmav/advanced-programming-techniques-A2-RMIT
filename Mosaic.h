@@ -20,8 +20,11 @@ class Mosaic {
         // Fill 2D arrays with chars
         void initArrays();
 
-        // Remove broken tile
-        void removeBrokenTile(int i);
+        // Add new broken tile to next slot
+        void addBrokenTile(Tile tile);
+
+        // Remove specified broken tile
+        void removeBrokenTile(Tile tile);
 
     private:
         char** storage;
