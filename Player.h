@@ -6,6 +6,9 @@ class Player {
         Player(std::string name);
         ~Player();
 
+        // Deep Copy Constructor
+        Player(const Player& other);
+
         // Getters/Setters
         std::string getName();
         Mosaic* getMosaic();

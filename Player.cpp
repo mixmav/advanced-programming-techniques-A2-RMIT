@@ -12,6 +12,12 @@ Player::~Player() {
     mosaic = nullptr;
 }
 
+Player::Player(const Player& other) :
+    name(other.name)
+{
+    mosaic = new Mosaic(*other.mosaic);
+}
+
 std::string Player::getName() {
     return this->name;
 }
