@@ -1,15 +1,7 @@
 #include "Mosaic.h"
 
 Mosaic::Mosaic() {
-    // Allocate memory for 1D arrays
-    this->storage = new char*[MOSAIC_DIM];
-    this->grid = new char*[MOSAIC_DIM];
-    this->brokenTiles = new char[BROKEN_TILES_SIZE];
-    // Allocate memory for 2D arrays
-    for(int i = 0; i < MOSAIC_DIM; ++i) {
-        this->storage[i] = new char[MOSAIC_DIM];
-        this->grid[i] = new char[MOSAIC_DIM];
-    }
+    allocMem();
     initArrays();
 }
 
@@ -24,6 +16,19 @@ Mosaic::~Mosaic() {
     storage = nullptr;
     grid = nullptr;
     brokenTiles = nullptr;
+}
+
+Mosaic::Mosaic(const Mosaic& other) {
+    allocMem();
+    for(int row = 0; row < MOSAIC_DIM; ++row) {
+        for(int col = 0; col < MOSAIC_DIM; ++col) {
+            storage[row][col] = char(other.storage[row][col]);
+            grid[row][col] = char(other.grid[row][col]);
+        }
+    }
+    for(int i = 0; i < BROKEN_TILES_SIZE; ++i) {
+        brokenTiles[i] = char(other.brokenTiles[i]);
+    }
 }
 
 char Mosaic::getStorage(int row, int col) {
@@ -67,6 +72,13 @@ void Mosaic::removeBrokenTile(Tile tile) {
             }
             i = BROKEN_TILES_SIZE;
         }
+    }
+}
+
+void Mosaic::allocMem() {
+    for(int i = 0; i < MOSAIC_DIM; ++i) {
+        this->storage[i] = new char[MOSAIC_DIM];
+        this->grid[i] = new char[MOSAIC_DIM];
     }
 }
 
