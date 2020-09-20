@@ -8,3 +8,13 @@ enum Tile {
     TILE_FIRST_PLAYER = 'F',
     TILE_NONE = '.'
 };
+
+// Enum list of available formatting options for Utility function PrettyPrint
+struct PrettyPrint {
+    enum Value {
+        UNDERLINE = 'U',
+        OVERLINE = 'O',
+        BOTH = 'B',
+        NONE = 'N'
+    };
+};
