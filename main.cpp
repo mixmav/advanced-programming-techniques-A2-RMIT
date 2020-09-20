@@ -5,8 +5,16 @@ int main(int argc, char** argv) {
     
     UI* ui = new UI();
     ui->printMenu();
+    
+    while (true){
+        // Check if  a valid selection was made
 
-    ui->dispatchMenuAction(ui->getUserIntInput());
+        if(ui->dispatchMenuAction(ui->getUserIntInput())){
+            break;
+        }
+
+        // If not, ask for an input again
+    }
 
     return EXIT_SUCCESS;
 }
