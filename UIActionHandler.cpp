@@ -1,11 +1,15 @@
 #include "iostream"
 #include "UIActionHandler.h"
 #include "Utility.h"
+#include "UI.h"
 
 void UIActionHandler::newGame(){
-
+    UI* ui = new UI();
+    
     prettyPrint("Starting a New Game", PrettyPrint::BOTH);
 
+    prettyPrintUIPrompt("Enter a name for player 1");
+    std::cout << ui->getUserStringInput();
 }
 
 void UIActionHandler::loadGame(){

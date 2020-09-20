@@ -21,6 +21,8 @@ void UI::printMenu(){
 
 
 int UI::getUserIntInput(){
+    UIActionHandler* uiActionHandler = new UIActionHandler();
+
     int input;
 	bool valid = false;
 
@@ -33,7 +35,7 @@ int UI::getUserIntInput(){
 
 		if (std::cin.eof())
 		{
-			return 4; //Quit
+            uiActionHandler->quit(); //Quit
 		}
 		
 
@@ -51,9 +53,27 @@ int UI::getUserIntInput(){
     return input;
 }
 
-std::string getUserStringInput(){
-    // TODO
-    return "TODO";
+std::string UI::getUserStringInput(){
+    UIActionHandler* uiActionHandler = new UIActionHandler();
+
+    std::string input;
+    bool valid = false;
+
+    while(!valid){
+        valid = true;
+
+        std::getline(std::cin >> std::ws, input);
+        
+        if(!std::cin) {
+            if(std::cin.eof()) {
+                uiActionHandler->quit(); //Quit game
+            } else {
+                valid = false; //Try again
+            }
+        }
+    }
+
+    return input;
 }
 
 bool UI::dispatchMenuAction(int input){

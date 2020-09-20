@@ -33,3 +33,7 @@ void prettyPrintList(std::vector<std::string> listItems){
 
     std::cout << std::endl;
 }
+
+void prettyPrintUIPrompt(std::string input){
+    std::cout << input << std::endl << "> ";
+}
