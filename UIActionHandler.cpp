@@ -3,13 +3,18 @@
 #include "Utility.h"
 #include "UI.h"
 
+
 void UIActionHandler::newGame(){
     UI* ui = new UI();
-    
+    std::string playerOneName, playerTwoName;
+
     prettyPrint("Starting a New Game", PrettyPrint::BOTH);
 
     prettyPrintUIPrompt("Enter a name for player 1");
-    std::cout << ui->getUserStringInput();
+    playerOneName = ui->getUserStringInput();
+
+    prettyPrintUIPrompt("Enter a name for player 2");
+    playerTwoName = ui->getUserStringInput();
 }
 
 void UIActionHandler::loadGame(){

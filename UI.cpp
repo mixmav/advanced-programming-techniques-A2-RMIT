@@ -72,7 +72,7 @@ std::string UI::getUserStringInput(){
             }
         }
     }
-
+    std::cout << std::endl;
     return input;
 }
 
