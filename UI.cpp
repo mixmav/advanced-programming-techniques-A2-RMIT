@@ -51,6 +51,11 @@ int UI::getUserIntInput(){
     return input;
 }
 
+std::string getUserStringInput(){
+    // TODO
+    return "TODO";
+}
+
 bool UI::dispatchMenuAction(int input){
     UIActionHandler* uiActionHandler = new UIActionHandler();
 
