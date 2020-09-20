@@ -1,6 +1,7 @@
 #include "iostream"
 
 #include "UI.h"
+#include "UIActionHandler.h"
 #include "Utility.h"
 
 void UI::printMenu(){
@@ -50,37 +51,44 @@ int UI::getUserIntInput(){
     return input;
 }
 
-void UI::dispatchMenuAction(int input){
+bool UI::dispatchMenuAction(int input){
+    UIActionHandler* uiActionHandler = new UIActionHandler();
+
 	switch (input)
 	{
+        case 1: { 
+            //New Game
+            
+			uiActionHandler->newGame();
+            
+			return true;
+        };
+        case 2: {
+            //Load Game
 
-	case 1: { 
-        //New Game
-		
-		std::cout << "New Game";
-		break;
-    };
-	case 2: {
-        //Load Game
+			uiActionHandler->loadGame();
 
-		std::cout << "Load Game";
-		break;
-    };
-    case 3: {
-        //Credits
+            return true;
+        };
+        case 3: {
+            //Credits
 
-		std::cout << "Credits";
-		break;
-    };
-    case 4: {
-        //Quit
+			uiActionHandler->printCredits();
 
-		std::cout << "Quit";
-		break;
-    };
+            return true;
+        };
+        case 4: {
+            //Quit
 
-	default:
-		std::cout << "Something else";
-		break;
+			uiActionHandler->quit();
+
+            return true;
+        };
+
+        default: {
+            // Invalid selection, return false
+			prettyPrint("Invalid selection, let's try again!", PrettyPrint::BOTH);
+            return false;
+        }
 	}
 }

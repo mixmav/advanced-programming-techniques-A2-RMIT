@@ -7,5 +7,6 @@ class UI {
         int getUserIntInput();
 
         //Dispatches the corresponding menu action based on the input
-        void dispatchMenuAction(int input);
+        //Returns false if an invalid selection was made
+        bool dispatchMenuAction(int input);
 };
