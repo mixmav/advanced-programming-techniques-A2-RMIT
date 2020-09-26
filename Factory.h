@@ -5,6 +5,7 @@
 
 class Factory 
 {
+	public:
 	// Creates an instance of Factory with given tiles.
     Factory(Tile tiles[FACTORY_SIZE]); 
 	~Factory();

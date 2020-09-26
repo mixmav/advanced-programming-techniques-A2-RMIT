@@ -14,6 +14,7 @@ template <class T> class LinkedList
 		Node *next = nullptr, *last = nullptr;
 	};
 
+	public:
 	LinkedList();
 	~LinkedList();
 
