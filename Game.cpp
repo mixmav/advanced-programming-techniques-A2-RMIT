@@ -21,5 +21,29 @@ bool Game::playRound(int factory, Tile tile, int bag)
 
 
 // Micheal
-    
-    
+int Game::getTurn() {
+    return turn;
+}
+
+LinkedList<Factory> Game::getFactories() {
+    return factories;
+}
+
+bool Game::isGameOver() {
+    for(int i = 0; i < 2; ++i) {
+        Player* player = players.at(activePlayer);
+        Mosaic* mosaic = player->getMosaic();
+        for(int row = 0; row < MOSAIC_DIM; ++row) {
+            char tile = mosaic->getStorage(row, 0);
+            for(int col = 0; col < MOSAIC_DIM; ++col) {
+                if(mosaic->getStorage(row, col) != tile) {
+                   col = MOSAIC_DIM; 
+                }
+                if(col == MOSAIC_DIM - 1) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
