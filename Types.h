@@ -6,7 +6,9 @@ enum Tile {
     TILE_LIGHT_BLUE = 'L',
     TILE_BLACK = 'U',
     TILE_FIRST_PLAYER = 'F',
-    TILE_NONE = '.'
+    TILE_NONE = '.',
+    TILE_SPACE = ' ',
+    TILE_NULL = '\0'
 };
 
 // Enum list of available formatting options for Utility function PrettyPrint

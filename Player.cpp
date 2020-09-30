@@ -39,17 +39,17 @@ void Player::displayMosaic() {
     for(int row = 0; row < MOSAIC_DIM; ++row) {
         std::cout << row + 1 << ": ";
         for(int col = 0; col < MOSAIC_DIM; ++col) {
-            std::cout << mosaic->getStorage(row, col) << " ";
+            std::cout << char(mosaic->getStorage(row, col)) << " ";
         }
         std::cout << "|| ";
         for(int col = 0; col < MOSAIC_DIM; ++col) {
-            std::cout << mosaic->getGrid(row, col) << " ";
+            std::cout << char(mosaic->getWall(row, col)) << " ";
         }
         std::cout << std::endl;
     }
     std::cout << "broken: ";
     for(int i = 0; i < BROKEN_TILES_SIZE; ++i) {
-        std::cout << mosaic->getBrokenTile(i) << " ";
+        std::cout << char(mosaic->getBrokenTile(i)) << " ";
     }
     std::cout << std::endl;
 }
