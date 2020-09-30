@@ -7,13 +7,13 @@ Mosaic::Mosaic() {
 
 Mosaic::~Mosaic() {
     for(int row = 0; row < MOSAIC_DIM; ++row) {
-        delete[] storage[row];
+        delete[] pattern[row];
         delete[] wall[row];
     }
-    delete[] storage;
+    delete[] pattern;
     delete[] wall;
     delete[] brokenTiles;
-    storage = nullptr;
+    pattern = nullptr;
     wall = nullptr;
     brokenTiles = nullptr;
 }
@@ -22,7 +22,7 @@ Mosaic::Mosaic(const Mosaic& other) {
     allocMem();
     for(int row = 0; row < MOSAIC_DIM; ++row) {
         for(int col = 0; col < MOSAIC_DIM; ++col) {
-            storage[row][col] = Tile(other.storage[row][col]);
+            pattern[row][col] = Tile(other.pattern[row][col]);
             wall[row][col] = Tile(other.wall[row][col]);
         }
     }
@@ -31,8 +31,8 @@ Mosaic::Mosaic(const Mosaic& other) {
     }
 }
 
-Tile Mosaic::getStorage(int row, int col) {
-    return storage[row][col];
+Tile Mosaic::getPattern(int row, int col) {
+    return pattern[row][col];
 }
 
 Tile Mosaic::getWall(int row, int col) {
@@ -43,8 +43,8 @@ Tile Mosaic::getBrokenTile(int i) {
     return brokenTiles[i];
 }
 
-void Mosaic::setStorage(Tile colour, int row, int col) {
-    storage[row][col] = colour;
+void Mosaic::setPattern(Tile colour, int row, int col) {
+    pattern[row][col] = colour;
 }
 
 void Mosaic::setWall(Tile colour, int row, int col) {
@@ -77,7 +77,7 @@ void Mosaic::removeBrokenTile(Tile tile) {
 
 void Mosaic::allocMem() {
     for(int i = 0; i < MOSAIC_DIM; ++i) {
-        this->storage[i] = new Tile[MOSAIC_DIM];
+        this->pattern[i] = new Tile[MOSAIC_DIM];
         this->wall[i] = new Tile[MOSAIC_DIM];
     }
 }
@@ -86,9 +86,9 @@ void Mosaic::initArrays() {
     for(int row = 0; row < MOSAIC_DIM; ++row) {
         for(int col = 0; col < MOSAIC_DIM; ++col) {
             if(MOSAIC_DIM - col <= row + 1) {
-                this->storage[row][col] = TILE_NONE;
+                this->pattern[row][col] = TILE_NONE;
             } else {
-                this->storage[row][col] = TILE_SPACE;
+                this->pattern[row][col] = TILE_SPACE;
             }
         }
     }

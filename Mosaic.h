@@ -12,11 +12,11 @@ class Mosaic {
         Mosaic(const Mosaic& other);
 
         // Getters/Setters
-        Tile getStorage(int row, int col);
+        Tile getPattern(int row, int col);
         Tile getWall(int row, int col);
         Tile getBrokenTile(int i);
         
-        void setStorage(Tile colour, int row, int col);
+        void setPattern(Tile colour, int row, int col);
         void setWall(Tile colour, int row, int col);
         void setBrokenTile(Tile tile, int i);
 
@@ -28,7 +28,7 @@ class Mosaic {
 
     private:
         // Allocate memory for 1D arrays
-        Tile** storage = new Tile*[MOSAIC_DIM];
+        Tile** pattern = new Tile*[MOSAIC_DIM];
         Tile** wall  = new Tile*[MOSAIC_DIM];
         Tile* brokenTiles  = new Tile[BROKEN_TILES_SIZE];
 
