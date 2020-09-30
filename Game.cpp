@@ -34,9 +34,9 @@ bool Game::isGameOver() {
         Player* player = players.at(activePlayer);
         Mosaic* mosaic = player->getMosaic();
         for(int row = 0; row < MOSAIC_DIM; ++row) {
-            char tile = mosaic->getStorage(row, 0);
+            Tile tile = mosaic->getPattern(row, 0);
             for(int col = 0; col < MOSAIC_DIM; ++col) {
-                if(mosaic->getStorage(row, col) != tile) {
+                if(mosaic->getPattern(row, col) != tile) {
                    col = MOSAIC_DIM; 
                 }
                 if(col == MOSAIC_DIM - 1) {
