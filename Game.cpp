@@ -68,6 +68,20 @@ int Game::getNextPlayerIndex()
 	return (activePlayer + players.size() - firstPlayer) % players.size();
 }
 
+int Game::findFirstPlayerIndex()
+{
+	int index = 0;
+	for (LinkedList<Player>::Iterator p = players.begin(); p.hasNext(); p.next())
+	{
+		// TODO: THIS NEEDS TO CHANGE
+		for (int i = 0; i < BROKEN_TILES_SIZE; i++)
+			if (p.get()->getMosaic()->getBrokenTile(i) == TILE_FIRST_PLAYER)
+				return index;
+		index++;
+	}
+	return 0;
+}
+
 bool Game::playRound(int factory, Tile tile, int row)
 {
 	Factory* f = factories.at(factory);
@@ -109,8 +123,7 @@ bool Game::playRound(int factory, Tile tile, int row)
 	}
 	activePlayer = nextPlayer;
 	return true;
-};
-
+}
 // Manav
 
 
