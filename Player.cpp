@@ -18,6 +18,11 @@ Player::Player(const Player& other) :
     mosaic = new Mosaic(*other.mosaic);
 }
 
+Player::Player(const Player&& other) {
+    name = other.name;
+    mosaic = other.mosaic;
+}
+
 std::string Player::getName() {
     return this->name;
 }

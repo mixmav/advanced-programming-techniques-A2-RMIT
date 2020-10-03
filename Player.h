@@ -9,6 +9,9 @@ class Player {
         // Deep Copy Constructor
         Player(const Player& other);
 
+        // Move Constructor
+        Player(const Player&& other);
+
         // Getters/Setters
         std::string getName();
         Mosaic* getMosaic();
