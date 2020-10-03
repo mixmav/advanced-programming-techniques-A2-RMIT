@@ -7,14 +7,14 @@ Mosaic::Mosaic() {
 
 Mosaic::~Mosaic() {
     for(int row = 0; row < MOSAIC_DIM; ++row) {
-        delete[] storage[row];
-        delete[] grid[row];
+        delete[] pattern[row];
+        delete[] wall[row];
     }
-    delete[] storage;
-    delete[] grid;
+    delete[] pattern;
+    delete[] wall;
     delete[] brokenTiles;
-    storage = nullptr;
-    grid = nullptr;
+    pattern = nullptr;
+    wall = nullptr;
     brokenTiles = nullptr;
 }
 
@@ -22,33 +22,33 @@ Mosaic::Mosaic(const Mosaic& other) {
     allocMem();
     for(int row = 0; row < MOSAIC_DIM; ++row) {
         for(int col = 0; col < MOSAIC_DIM; ++col) {
-            storage[row][col] = char(other.storage[row][col]);
-            grid[row][col] = char(other.grid[row][col]);
+            pattern[row][col] = Tile(other.pattern[row][col]);
+            wall[row][col] = Tile(other.wall[row][col]);
         }
     }
     for(int i = 0; i < BROKEN_TILES_SIZE; ++i) {
-        brokenTiles[i] = char(other.brokenTiles[i]);
+        brokenTiles[i] = Tile(other.brokenTiles[i]);
     }
 }
 
-char Mosaic::getStorage(int row, int col) {
-    return storage[row][col];
+Tile Mosaic::getPattern(int row, int col) {
+    return pattern[row][col];
 }
 
-char Mosaic::getGrid(int row, int col) {
-    return grid[row][col];
+Tile Mosaic::getWall(int row, int col) {
+    return wall[row][col];
 }
 
-char Mosaic::getBrokenTile(int i) {
+Tile Mosaic::getBrokenTile(int i) {
     return brokenTiles[i];
 }
 
-void Mosaic::setStorage(Tile colour, int row, int col) {
-    storage[row][col] = colour;
+void Mosaic::setPattern(Tile colour, int row, int col) {
+    pattern[row][col] = colour;
 }
 
-void Mosaic::setGrid(Tile colour, int row, int col) {
-    grid[row][col] = colour;
+void Mosaic::setWall(Tile colour, int row, int col) {
+    wall[row][col] = colour;
 }
 
 void Mosaic::setBrokenTile(Tile tile, int i) {
@@ -66,7 +66,7 @@ void Mosaic::addBrokenTile(Tile tile) {
 void Mosaic::removeBrokenTile(Tile tile) {
     for(int i = 0; i < BROKEN_TILES_SIZE; ++i) {
         if(brokenTiles[i] == tile) {
-            brokenTiles[i] = '\0';
+            brokenTiles[i] = TILE_NULL;
             for(int j = i; j < BROKEN_TILES_SIZE; ++j) {
                 brokenTiles[j] = brokenTiles[j + 1];
             }
@@ -77,8 +77,8 @@ void Mosaic::removeBrokenTile(Tile tile) {
 
 void Mosaic::allocMem() {
     for(int i = 0; i < MOSAIC_DIM; ++i) {
-        this->storage[i] = new char[MOSAIC_DIM];
-        this->grid[i] = new char[MOSAIC_DIM];
+        this->pattern[i] = new Tile[MOSAIC_DIM];
+        this->wall[i] = new Tile[MOSAIC_DIM];
     }
 }
 
@@ -86,15 +86,15 @@ void Mosaic::initArrays() {
     for(int row = 0; row < MOSAIC_DIM; ++row) {
         for(int col = 0; col < MOSAIC_DIM; ++col) {
             if(MOSAIC_DIM - col <= row + 1) {
-                this->storage[row][col] = TILE_NONE;
+                this->pattern[row][col] = TILE_NONE;
             } else {
-                this->storage[row][col] = ' ';
+                this->pattern[row][col] = TILE_SPACE;
             }
         }
     }
     for(int row = 0; row < MOSAIC_DIM; ++row) {
         for(int col = 0; col < MOSAIC_DIM; ++col) {
-            this->grid[row][col] = TILE_NONE;
+            this->wall[row][col] = TILE_NONE;
         }
     }
 }

@@ -4,6 +4,16 @@
 #include "Types.h"
 #include <vector>
 
+#include "LinkedList.h"
+#include "Player.h"
+#include "Factory.h"
+#include "Types.h"
+#include <vector>
+#include "Mosaic.h"
+
+#define NO_FACTORIES 5
+
+
 class Game {
 
     // Faraz
@@ -28,11 +38,16 @@ class Game {
 
 
     // Micheal
-    
+    // Returns the current turn.
+    int getTurn();
+    // Checks each player's Mosaics' storage for the game over condition, being a player having a full row.
+    bool isGameOver();
+    // Returns the list of factories.
+    LinkedList<Factory> getFactories();
     
     private:
     // Faraz
-        LinkedList<Player> players;
+    LinkedList<Player> players;
 		LinkedList<Factory> factories;
 
 		int turn;
@@ -43,6 +58,5 @@ class Game {
 
 
     // Micheal
-    
     
 };

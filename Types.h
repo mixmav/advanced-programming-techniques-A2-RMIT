@@ -1,3 +1,6 @@
+#ifndef TYPES_HEADER
+#define TYPES_HEADER
+
 // Enum list of available tiles
 enum Tile {
     TILE_RED = 'R',
@@ -6,7 +9,9 @@ enum Tile {
     TILE_LIGHT_BLUE = 'L',
     TILE_BLACK = 'U',
     TILE_FIRST_PLAYER = 'F',
-    TILE_NONE = '.'
+    TILE_NONE = '.',
+    TILE_SPACE = ' ',
+    TILE_NULL = '\0'
 };
 
 // Enum list of available formatting options for Utility function PrettyPrint
@@ -18,3 +23,5 @@ struct PrettyPrint {
         NONE = 'N'
     };
 };
+
+#endif
