@@ -1,3 +1,6 @@
+#ifndef TYPES_HEADER
+#define TYPES_HEADER
+
 // Enum list of available tiles
 enum Tile {
     TILE_RED = 'R',
@@ -20,3 +23,5 @@ struct PrettyPrint {
         NONE = 'N'
     };
 };
+
+#endif
