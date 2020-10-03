@@ -10,16 +10,18 @@ class Tilebag {
         Tilebag();
 		~Tilebag();
 
-
-		// Draws tile from the front  of the queue
+		// Draws tile from the front of the queue.
 		Tile drawTile();
 
-		// Add tile to the back of the queue
+		// Draws a set amount of tiles from the front of the queue.
+		Tile* drawTiles(int count);
+
+		// Add tile to the back of the queue.
 		void addTile(Tile tile);
 
 
-		protected:			
-			LinkedList<Tile> tiles;
+	protected:			
+		LinkedList<Tile>* tiles;
 };
 
 
