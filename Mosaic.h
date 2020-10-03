@@ -1,4 +1,8 @@
+#ifndef MOSAIC_HEADER
+#define MOSAIC_HEADER
+
 #include "Types.h"
+
 #define MOSAIC_DIM 5
 #define BROKEN_TILES_SIZE 7
 
