@@ -1,9 +1,9 @@
-
 // Everything below this, is going to be defined only 1 time
 #ifndef TILEBAG_HEADER
 #define TILEBAG_HEADER
 
 #include "Types.h"
+#include "LinkedList.h"
 
 class Tilebag {
     public :
@@ -12,14 +12,14 @@ class Tilebag {
 
 
 		// Draws tile from the front  of the queue
-		void drawTile(Tile tile);
+		Tile drawTile();
 
 		// Add tile to the back of the queue
 		void addTile(Tile tile);
 
 
-		protected:
-
+		protected:			
+			LinkedList<Tile> tiles;
 };
 
 
