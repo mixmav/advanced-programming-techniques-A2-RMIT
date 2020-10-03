@@ -125,3 +125,54 @@ template<> LinkedList<T>::Node::~Node()
 	last = next = nullptr;
 	data = nullptr;
 }
+
+template<> LinkedList<T>::Iterator::Iterator(Node* node)
+{
+	this->node = node;
+}
+
+template<> LinkedList<T>::Iterator::~Iterator()
+{
+	node = nullptr;
+}
+
+template<> T* LinkedList<T>::Iterator::get()
+{
+	return node->data;
+}
+
+template<> T* LinkedList<T>::Iterator::next()
+{	
+	if (!hasNext())
+		return nullptr;
+	node = node->next;
+	return node->data;
+}
+
+template<> T* LinkedList<T>::Iterator::last()
+{
+	if (!hasLast())
+		return nullptr;
+	node = node->last;
+	return node->data;
+}
+
+template<> bool LinkedList<T>::Iterator::hasNext()
+{
+	return node->next != nullptr;
+}
+
+template<> bool LinkedList<T>::Iterator::hasLast()
+{
+	return node->last != nullptr;
+}
+
+LinkedList<T>::Iterator LinkedList<T>::begin()
+{
+	return Iterator(head);
+}
+
+LinkedList<T>::Iterator LinkedList<T>::end()
+{
+	return Iterator(tail);
+}
