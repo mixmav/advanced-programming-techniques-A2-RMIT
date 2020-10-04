@@ -1,5 +1,5 @@
-#ifndef LINKEDLIST_HEADER
-#define LINKEDLIST_HEADER
+#ifndef LLARRAY_HEADER
+#define LLARRAY_HEADER
 
 template <class T> class LinkedList
 {
