@@ -2,9 +2,7 @@
 #define MOSAIC_HEADER
 
 #include "Types.h"
-
-#define MOSAIC_DIM 5
-#define BROKEN_TILES_SIZE 7
+#include <vector>
 
 class Mosaic {
     public:
@@ -30,11 +28,14 @@ class Mosaic {
         // Remove specified broken tile
         void removeBrokenTile(Tile tile);
 
+		// Remove broken tile at said index
+		void removeBrokenTile(int index);
+
     private:
         // Allocate memory for 1D arrays
         Tile** pattern = new Tile*[MOSAIC_DIM];
         Tile** wall  = new Tile*[MOSAIC_DIM];
-        Tile* brokenTiles  = new Tile[BROKEN_TILES_SIZE];
+        std::vector<Tile> brokenTiles;
 
         // Allocate memory for 2D arrays
         void allocMem();
@@ -42,3 +43,5 @@ class Mosaic {
         // Fill 2D arrays with chars
         void initArrays();
 };
+
+#endif

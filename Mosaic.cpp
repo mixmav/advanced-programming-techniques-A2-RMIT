@@ -1,8 +1,10 @@
 #include "Mosaic.h"
+#include <vector>
 
 Mosaic::Mosaic() {
     allocMem();
     initArrays();
+	brokenTiles = std::vector<Tile>();
 }
 
 Mosaic::~Mosaic() {
@@ -12,10 +14,10 @@ Mosaic::~Mosaic() {
     }
     delete[] pattern;
     delete[] wall;
-    delete[] brokenTiles;
+    brokenTiles.clear();
+	delete &brokenTiles;
     pattern = nullptr;
     wall = nullptr;
-    brokenTiles = nullptr;
 }
 
 Mosaic::Mosaic(const Mosaic& other) {
@@ -26,9 +28,8 @@ Mosaic::Mosaic(const Mosaic& other) {
             wall[row][col] = Tile(other.wall[row][col]);
         }
     }
-    for(int i = 0; i < BROKEN_TILES_SIZE; ++i) {
-        brokenTiles[i] = Tile(other.brokenTiles[i]);
-    }
+    
+	brokenTiles = std::vector<Tile>(other.brokenTiles);
 }
 
 Tile Mosaic::getPattern(int row, int col) {
@@ -56,23 +57,17 @@ void Mosaic::setBrokenTile(Tile tile, int i) {
 }
 
 void Mosaic::addBrokenTile(Tile tile) {
-    for(int i = 0; i < BROKEN_TILES_SIZE; ++i) {
-        if(brokenTiles[i] == '\0') {
-            brokenTiles[i] = tile;
-        }
-    }
+    brokenTiles.push_back(tile);
+}
+
+void Mosaic::removeBrokenTile(int index) {
+    brokenTiles.erase(brokenTiles.begin() + index);
 }
 
 void Mosaic::removeBrokenTile(Tile tile) {
-    for(int i = 0; i < BROKEN_TILES_SIZE; ++i) {
-        if(brokenTiles[i] == tile) {
-            brokenTiles[i] = TILE_NULL;
-            for(int j = i; j < BROKEN_TILES_SIZE; ++j) {
-                brokenTiles[j] = brokenTiles[j + 1];
-            }
-            i = BROKEN_TILES_SIZE;
-        }
-    }
+    for (std::vector<Tile>::iterator i = brokenTiles.begin(); i < brokenTiles.end(); i++)
+		if (*i == tile)
+			brokenTiles.erase(i);
 }
 
 void Mosaic::allocMem() {

@@ -1,6 +1,11 @@
 #include "Factory.h"
 #include "Types.h"
 
+Factory::Factory()
+{
+	
+}
+
 Factory::Factory(Tile tiles[FACTORY_SIZE])
 {
 	this->tiles = std::vector<Tile>();

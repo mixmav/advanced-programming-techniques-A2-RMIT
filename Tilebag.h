@@ -1,4 +1,3 @@
-// Everything below this, is going to be defined only 1 time
 #ifndef TILEBAG_HEADER
 #define TILEBAG_HEADER
 
@@ -18,7 +17,6 @@ class Tilebag {
 
 		// Add tile to the back of the queue.
 		void addTile(Tile tile);
-
 
 	protected:			
 		LinkedList<Tile>* tiles;

@@ -1,3 +1,6 @@
+#ifndef FACTORY_HEADER
+#define FACTORY_HEADER
+
 #include "Types.h"
 #include <vector>
 
@@ -7,6 +10,7 @@ class Factory
 {
 	public:
 	// Creates an instance of Factory with given tiles.
+	Factory();
     Factory(Tile tiles[FACTORY_SIZE]); 
 	~Factory();
         
@@ -24,3 +28,5 @@ class Factory
     private:
     	std::vector<Tile> tiles;
 };
+
+#endif

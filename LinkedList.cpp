@@ -176,3 +176,12 @@ LinkedList<T>::Iterator LinkedList<T>::end()
 {
 	return Iterator(tail);
 }
+
+T** LinkedList<T>::toArray()
+{
+	T** arr = new T*[length];
+	int i = 0;
+	for (Node* n = head; n != nullptr; n = n->next, i++)
+		arr[i] = n->data;
+	return arr;
+}
