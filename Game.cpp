@@ -65,7 +65,7 @@ Game::Game(std::vector<std::string> players)
 	}
 
 	this->players = new LinkedList<Player>();
-	for (int i = 0; i < players.size(); i++)
+	for (int i = 0; i < int(players.size()); i++)
 		this->players->push_back(new Player(players.at(i)));
 
 	this->tilebag = new Tilebag();
@@ -193,7 +193,7 @@ bool Game::playHand(int factory, Tile tile, int row)
 	// Move to the first empty slot in the row, keep adding tiles, when out of space, add to broken tiles.
 	int offset = 0;
 	for (offset = 0; mos->getPattern(row, offset) != TILE_NONE; offset++) ;
-	for (int i = 0; i < tiles.size(); i++)
+	for (int i = 0; i < int(tiles.size()); i++)
 	{
 		if (i + offset < MOSAIC_DIM)
 			mos->setPattern(tile, row, i + offset);
