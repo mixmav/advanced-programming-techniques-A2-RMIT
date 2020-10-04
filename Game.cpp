@@ -21,7 +21,7 @@ int Game::getScore(int player)
 	{
 		bool bonus = true;
 		for (int j = 0; j < MOSAIC_DIM; j++)
-			bonus &= mos->getStorage(i, j);
+			bonus &= mos->getPattern(i, j);
 		
 		if (bonus)
 			score += 2;
@@ -32,7 +32,7 @@ int Game::getScore(int player)
 	{
 		bool bonus = true;
 		for (int j = 0; j < MOSAIC_DIM; j++)
-			bonus &= mos->getStorage(j, i);
+			bonus &= mos->getPattern(j, i);
 		
 		if (bonus)
 			score += 7;
@@ -43,13 +43,13 @@ int Game::getScore(int player)
 	// Calculate bonus: Crosspoints and regular tiles
 	for (int y = 0; y < MOSAIC_DIM; y++)
 		for (int x = 0; x < MOSAIC_DIM; x++)
-			if (mos->getStorage(y, x) != TILE_NONE)
+			if (mos->getPattern(y, x) != TILE_NONE)
 			{
 				score++;
-				if (((x + 1 < MOSAIC_DIM && mos->getStorage(y, x + 1) != TILE_NONE) ||
-					(x - 1 >= 0 && mos->getStorage(y, x - 1) != TILE_NONE)) &&
-					((y + 1 < MOSAIC_DIM && mos->getStorage(y + 1, x) != TILE_NONE) ||
-					(y - 1 >= 0 && mos->getStorage(y + 1, x) != TILE_NONE)))
+				if (((x + 1 < MOSAIC_DIM && mos->getPattern(y, x + 1) != TILE_NONE) ||
+					(x - 1 >= 0 && mos->getPattern(y, x - 1) != TILE_NONE)) &&
+					((y + 1 < MOSAIC_DIM && mos->getPattern(y + 1, x) != TILE_NONE) ||
+					(y - 1 >= 0 && mos->getPattern(y + 1, x) != TILE_NONE)))
 					score++;
 			}
 
@@ -94,7 +94,7 @@ bool Game::playRound(int factory, Tile tile, int row)
 		return false;
 	
 	// The tiles can only be fitted in a row with empty slots, no different tiles on the pattern, and no same tiles on the wall.
-	if (mos->getGrid(row, 0) != TILE_NONE && mos->getGrid(row, 0) != tile && mos->getGrid(row, row) != TILE_NONE)
+	if (mos->getWall(row, 0) != TILE_NONE && mos->getWall(row, 0) != tile && mos->getWall(row, row) != TILE_NONE)
 		return false;
 
 	if (tiles.back() == TILE_FIRST_PLAYER)
@@ -105,11 +105,11 @@ bool Game::playRound(int factory, Tile tile, int row)
 
 	// Move to the first empty slot in the row, keep adding tiles, when out of space, add to broken tiles.
 	int offset = 0;
-	for (offset = 0; mos->getGrid(row, offset) != TILE_NONE; offset++) ;
+	for (offset = 0; mos->getWall(row, offset) != TILE_NONE; offset++) ;
 	for (int i = 0; i < tiles.size(); i++)
 	{
 		if (i + offset < MOSAIC_DIM)
-			mos->setGrid(tile, row, i + offset);
+			mos->setWall(tile, row, i + offset);
 		else
 			mos->addBrokenTile(tile);
 	}
@@ -137,11 +137,14 @@ LinkedList<Factory> Game::getFactories() {
 }
 
 bool Game::isGameOver() {
+	// iterates through players.
     for(int i = 0; i < 2; ++i) {
         Player* player = players.at(activePlayer);
         Mosaic* mosaic = player->getMosaic();
+		// iterates through each row for the current player's mosaic.
         for(int row = 0; row < MOSAIC_DIM; ++row) {
             Tile tile = mosaic->getPattern(row, 0);
+			// Checks if entire row is full.
             for(int col = 0; col < MOSAIC_DIM; ++col) {
                 if(mosaic->getPattern(row, col) != tile) {
                    col = MOSAIC_DIM; 
@@ -153,4 +156,94 @@ bool Game::isGameOver() {
         }
     }
     return false;
+}
+
+void Game::saveGame(std::string fileName, LinkedList<std::string> turns) {
+    std::ofstream file;
+    file.open(fileName);
+	LinkedList<Tile>* initialTilebag = tilebag->getInitailTilebag();
+    // Writes initial tilebag.
+	file << "<";
+	for(int i = 0; i < initialTilebag->size() - 1; ++i) {
+		file << initialTilebag->at(i);
+		if(i < initialTilebag->size() - 1) {
+			file << ", ";
+		}
+	}
+	file << ">";
+	// Writes player names.
+    for(int i = 0; i < 2; ++i) {
+        Player* player = players.at(i);
+        file << player->getName() << std::endl;
+    }
+	// Writes all turns made.
+	for(int i = 0; i < turns.size() - 1; ++i) {
+		file << turns.at(i);
+		if(i < turns.size() - 1) {
+			file << std::endl;
+		}
+	}
+    file.close();
+	std::cout << "Game successfully saved to '" << fileName << "'" << std::endl;
+}
+
+void Game::loadGame() {
+	std::string string;
+	LinkedList<Tile>* newTilebag = new LinkedList<Tile>();
+    std::vector<char> tiles;
+    std::vector<std::vector<std::string>> turns;
+	// Loops through save file as input.
+    while(std::cin >> string) {
+        if(string.compare(0, 4, "turn") != 0) {
+			// Removes front '<' character.
+            if(string.compare(0, 1, "<") == 0) {
+                string.erase(0, 1);
+            }
+			// Removes ',' and '>' at end.
+            string.pop_back();
+            tiles.push_back(*string.c_str());    
+        } else {
+            std::vector<std::string> turn;
+            std::string string;
+			// Loops through the 3 args.
+            for(int i = 0; i < 3; ++i) {
+                std::cin >> string;
+                turn.push_back(string);
+            }
+            turns.push_back(turn);
+        }
+    }
+	// Converts chars to Tiles.
+	int i = 0;
+    for(char tile : tiles) {
+		Tile* t = new Tile(static_cast<Tile>(tile));
+		newTilebag->insert(t, i);
+		++i;
+    }
+	tilebag->replaceTilebag(newTilebag);
+	// Execute saved turns.
+	for(std::vector<std::string> turn : turns) {
+		playRound(std::stoi(turn[0]), static_cast<Tile>(*turn[1].c_str()), std::stoi(turn[2]));
+	}
+}
+
+void Game::testingMode() {
+	loadGame();
+	// Lists the factories and Tiles within.
+	std::cout << "Factories:" << std::endl;
+	for(int factNum = 0; factNum <= NO_FACTORIES; ++factNum) {
+		Factory* factory = factories.at(factNum);
+		std::cout << factNum << ": ";
+		std::vector<Tile> tiles = factory->getTiles();
+		for(Tile tile : tiles) {
+			std::cout << tile << " ";
+		}
+		std::cout << std::endl;
+	}
+	// Displays each player's score and mosaics.
+	for(int i = 0; i < 2; ++i) {
+		Player* player = players.at(i);
+		std::cout << "Score for Player " << player->getName() << ": " << getScore(i) << std::endl;
+		player->displayMosaic();
+	}
 }

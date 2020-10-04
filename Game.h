@@ -3,13 +3,10 @@
 #include "Factory.h"
 #include "Types.h"
 #include <vector>
-
-#include "LinkedList.h"
-#include "Player.h"
-#include "Factory.h"
-#include "Types.h"
-#include <vector>
 #include "Mosaic.h"
+#include <iostream>
+#include <fstream>
+#include "Tilebag.h"
 
 #define NO_FACTORIES 5
 
@@ -40,11 +37,22 @@ class Game {
     // Micheal
     // Returns the current turn.
     int getTurn();
+
     // Checks each player's Mosaics' storage for the game over condition, being a player having a full row.
     bool isGameOver();
+    
     // Returns the list of factories.
     LinkedList<Factory> getFactories();
-    
+
+    // Saves Player names, initial Tile bag and turns to file.
+    void saveGame(std::string fileName, LinkedList<std::string> turns);
+
+    // Read file and 'replay game'
+    void loadGame();
+
+    // Testing Mode.
+    void testingMode();
+
     private:
     // Faraz
     LinkedList<Player> players;
@@ -58,5 +66,5 @@ class Game {
 
 
     // Micheal
-    
+    Tilebag* tilebag;
 };

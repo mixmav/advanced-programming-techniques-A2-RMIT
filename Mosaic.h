@@ -42,3 +42,5 @@ class Mosaic {
         // Fill 2D arrays with chars
         void initArrays();
 };
+
+#endif
