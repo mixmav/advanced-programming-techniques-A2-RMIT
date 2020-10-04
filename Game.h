@@ -53,10 +53,10 @@ class Game {
     void saveGame(std::string fileName, LinkedList<std::string> turns);
 
     // Read file and 'replay game'
-    void loadGame();
+    void loadGame(std::string fileName);
 
     // Testing Mode.
-    void testingMode();
+    void testingMode(std::string fileName);
 
     private:
     // Faraz

@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
         std::string s;
         s = argv[i];
         if(s.compare("-t") == 0) {
-            game->testingMode();
+            game->testingMode(argv[i + 1]);
         }
     }
 

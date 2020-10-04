@@ -196,13 +196,14 @@ void Game::saveGame(std::string fileName, LinkedList<std::string> turns) {
 	std::cout << "Game successfully saved to '" << fileName << "'" << std::endl;
 }
 
-void Game::loadGame() {
+void Game::loadGame(std::string fileName) {
 	std::string string;
 	LinkedList<Tile>* newTilebag = new LinkedList<Tile>();
     std::vector<char> tiles;
     std::vector<std::vector<std::string>> turns;
+	std::ifstream file(fileName);
 	// Loops through save file as input.
-    while(std::cin >> string) {
+    while(file >> string) {
         if(string.compare(0, 4, "turn") != 0) {
 			// Removes front '<' character.
             if(string.compare(0, 1, "<") == 0) {
@@ -216,7 +217,7 @@ void Game::loadGame() {
             std::string string;
 			// Loops through the 3 args.
             for(int i = 0; i < 3; ++i) {
-                std::cin >> string;
+                file >> string;
                 turn.push_back(string);
             }
             turns.push_back(turn);
@@ -236,8 +237,8 @@ void Game::loadGame() {
 	}
 }
 
-void Game::testingMode() {
-	loadGame();
+void Game::testingMode(std::string fileName) {
+	loadGame(fileName);
 	// Lists the factories and Tiles within.
 	std::cout << "Factories:" << std::endl;
 	for(int factNum = 0; factNum <= NO_FACTORIES; ++factNum) {
