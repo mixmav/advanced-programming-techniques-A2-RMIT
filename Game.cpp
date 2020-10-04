@@ -166,6 +166,7 @@ bool Game::concludeRound()
 		activePlayer = firstPlayer = findFirstPlayerIndex();
 		round++;
 	}
+	return true;
 }
 
 bool Game::playHand(int factory, Tile tile, int row)

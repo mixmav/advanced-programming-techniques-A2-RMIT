@@ -1,11 +1,11 @@
 #include "LinkedList.h"
 
-LinkedList<class T>::LinkedList()
+template<class T> LinkedList<T>::LinkedList()
 {
 	
 }
 
-LinkedList<class T>::~LinkedList()
+template<class T> LinkedList<T>::~LinkedList()
 {
 	for (Node* i = head; i != nullptr; )
 	{
@@ -15,7 +15,7 @@ LinkedList<class T>::~LinkedList()
 	}
 }
 
-bool LinkedList<class T>::contains(T* item)
+template<class T> bool LinkedList<T>::contains(T* item)
 {
 	for (Node* i = head; i != nullptr; i = i->next)
 		if (item == i->data)
@@ -24,7 +24,7 @@ bool LinkedList<class T>::contains(T* item)
 	return false;
 }
 
-int LinkedList<class T>::find(T* item) 
+template<class T> int LinkedList<T>::find(T* item) 
 {
 	int counter = 0;
 	for (Node* i = head; i != nullptr; i = i->next)
@@ -38,12 +38,12 @@ int LinkedList<class T>::find(T* item)
 	return -1;
 }
 
-int LinkedList<class T>::size()
+template<class T> int LinkedList<T>::size()
 {
 	return this->length;
 }
 
-void LinkedList<class T>::push_back(T* item)
+template<class T> void LinkedList<T>::push_back(T* item)
 {
 	if (head == nullptr)
 		tail = head = new Node(item, nullptr, nullptr);
@@ -53,7 +53,7 @@ void LinkedList<class T>::push_back(T* item)
 	length++;
 }
 
-T* LinkedList<class T>::at(int index)
+template<class T> T* LinkedList<T>::at(int index)
 {
 	Node* n = head;
 	for (int i = 0; i < index && n != nullptr; i++, n = n->next) ;
@@ -63,7 +63,7 @@ T* LinkedList<class T>::at(int index)
 	return n->data;
 }
 
-void LinkedList<class T>::insert(T* item, int index)
+template<class T> void LinkedList<T>::insert(T* item, int index)
 {
 	if (index == 0)
 	{
@@ -87,7 +87,7 @@ void LinkedList<class T>::insert(T* item, int index)
 	length++;
 }
 
-void LinkedList<class T>::remove(T* item)
+template<class T> void LinkedList<T>::remove(T* item)
 {
 	for (Node* i = head; i != nullptr; i = i->next)
 		if (item == i->data)
@@ -96,7 +96,7 @@ void LinkedList<class T>::remove(T* item)
 	length--;
 }
 
-void LinkedList<class T>::removeAt(int index)
+template<class T> void LinkedList<T>::removeAt(int index)
 {
 	Node* n = head;
 	for (int i = 0; i < index && n != nullptr; i++, n = n->next);
@@ -107,14 +107,14 @@ void LinkedList<class T>::removeAt(int index)
 	length--;
 }
 
-template<> LinkedList<T>::Node::Node(T* item, Node* last, Node* next)
+template<class T> LinkedList<T>::Node::Node(T* item, Node* last, Node* next)
 {
 	this->data = item;
 	this->last = last;
 	this->next = next;
 }
 
-template<> LinkedList<T>::Node::~Node()
+template<class T> LinkedList<T>::Node::~Node()
 {
 	if (next != nullptr)
 		next->last = last;
@@ -126,22 +126,22 @@ template<> LinkedList<T>::Node::~Node()
 	data = nullptr;
 }
 
-template<> LinkedList<T>::Iterator::Iterator(Node* node)
+template<class T> LinkedList<T>::Iterator::Iterator(Node* node)
 {
 	this->node = node;
 }
 
-template<> LinkedList<T>::Iterator::~Iterator()
+template<class T> LinkedList<T>::Iterator::~Iterator()
 {
 	node = nullptr;
 }
 
-template<> T* LinkedList<T>::Iterator::get()
+template<class T> T* LinkedList<T>::Iterator::get()
 {
 	return node->data;
 }
 
-template<> T* LinkedList<T>::Iterator::next()
+template<class T> T* LinkedList<T>::Iterator::next()
 {	
 	if (!hasNext())
 		return nullptr;
@@ -149,7 +149,7 @@ template<> T* LinkedList<T>::Iterator::next()
 	return node->data;
 }
 
-template<> T* LinkedList<T>::Iterator::last()
+template<class T> T* LinkedList<T>::Iterator::last()
 {
 	if (!hasLast())
 		return nullptr;
@@ -157,27 +157,27 @@ template<> T* LinkedList<T>::Iterator::last()
 	return node->data;
 }
 
-template<> bool LinkedList<T>::Iterator::hasNext()
+template<class T> bool LinkedList<T>::Iterator::hasNext()
 {
 	return node->next != nullptr;
 }
 
-template<> bool LinkedList<T>::Iterator::hasLast()
+template<class T> bool LinkedList<T>::Iterator::hasLast()
 {
 	return node->last != nullptr;
 }
 
-LinkedList<T>::Iterator LinkedList<T>::begin()
+template<class T> LinkedList<T>::Iterator LinkedList<T>::begin()
 {
 	return Iterator(head);
 }
 
-LinkedList<T>::Iterator LinkedList<T>::end()
+template<class T> LinkedList<T>::Iterator LinkedList<T>::end()
 {
 	return Iterator(tail);
 }
 
-T** LinkedList<T>::toArray()
+template<class T> T** LinkedList<T>::toArray()
 {
 	T** arr = new T*[length];
 	int i = 0;
