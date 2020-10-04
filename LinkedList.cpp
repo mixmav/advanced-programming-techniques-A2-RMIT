@@ -1,11 +1,11 @@
 #include "LinkedList.h"
 
-LinkedList<class T>::LinkedList()
+template<>LinkedList<class T>::LinkedList()
 {
 	
 }
 
-LinkedList<class T>::~LinkedList()
+template<>LinkedList<class T>::~LinkedList()
 {
 	for (Node* i = head; i != nullptr; )
 	{
@@ -15,7 +15,7 @@ LinkedList<class T>::~LinkedList()
 	}
 }
 
-bool LinkedList<class T>::contains(T* item)
+template<>bool LinkedList<class T>::contains(T* item)
 {
 	for (Node* i = head; i != nullptr; i = i->next)
 		if (item == i->data)
@@ -24,7 +24,7 @@ bool LinkedList<class T>::contains(T* item)
 	return false;
 }
 
-int LinkedList<class T>::find(T* item) 
+template<>int LinkedList<class T>::find(T* item) 
 {
 	int counter = 0;
 	for (Node* i = head; i != nullptr; i = i->next)
@@ -38,12 +38,12 @@ int LinkedList<class T>::find(T* item)
 	return -1;
 }
 
-int LinkedList<class T>::size()
+template<>int LinkedList<class T>::size()
 {
 	return this->length;
 }
 
-void LinkedList<class T>::push_back(T* item)
+template<>void LinkedList<class T>::push_back(T* item)
 {
 	if (head == nullptr)
 		tail = head = new Node(item, nullptr, nullptr);
@@ -53,7 +53,7 @@ void LinkedList<class T>::push_back(T* item)
 	length++;
 }
 
-T* LinkedList<class T>::at(int index)
+template<>T* LinkedList<class T>::at(int index)
 {
 	Node* n = head;
 	for (int i = 0; i < index && n != nullptr; i++, n = n->next) ;
@@ -63,7 +63,7 @@ T* LinkedList<class T>::at(int index)
 	return n->data;
 }
 
-void LinkedList<class T>::insert(T* item, int index)
+template<>void LinkedList<class T>::insert(T* item, int index)
 {
 	if (index == 0)
 	{
@@ -87,7 +87,7 @@ void LinkedList<class T>::insert(T* item, int index)
 	length++;
 }
 
-void LinkedList<class T>::remove(T* item)
+template<>void LinkedList<class T>::remove(T* item)
 {
 	for (Node* i = head; i != nullptr; i = i->next)
 		if (item == i->data)
@@ -96,7 +96,7 @@ void LinkedList<class T>::remove(T* item)
 	length--;
 }
 
-void LinkedList<class T>::removeAt(int index)
+template<>void LinkedList<class T>::removeAt(int index)
 {
 	Node* n = head;
 	for (int i = 0; i < index && n != nullptr; i++, n = n->next);
