@@ -46,37 +46,6 @@ void Game::applyEndgameBonuses()
 	}
 }
 
-/*int Game::getScore(int player)
-{
-	Player* p = players.at(player);
-	Mosaic* mos = p->getMosaic();
-	int score = 0;
-
-	// Calculate bonus: Horizontal fill
-	for (int i = 0; i < MOSAIC_DIM; i++)
-	{
-		bool bonus = true;
-		for (int j = 0; j < MOSAIC_DIM; j++)
-			bonus &= mos->getWall(i, j);
-		
-		if (bonus)
-			score += 2;
-	}
-
-	// Calculate bonus: Vertical fill
-	for (int i = 0; i < MOSAIC_DIM; i++)
-	{
-		bool bonus = true;
-		for (int j = 0; j < MOSAIC_DIM; j++)
-			bonus &= mos->getWall(j, i);
-		
-		if (bonus)
-			score += 7;
-	}
-
-	// TODO: bonus for filled colours
-}*/
-
 Game::Game(std::vector<std::string> players)
 {
 	int factoryCount;
@@ -240,11 +209,11 @@ bool Game::playHand(int factory, Tile tile, int row)
 // Manav
 
 Player Game::getActivePlayer(){
-	return activePlayer;
+	return *players->at(activePlayer);
 }
 
 Player Game::getNextPlayer(){
-	return players.at(getNextPlayerIndex());
+	return *players->at(getNextPlayerIndex());
 }
 
 // Micheal
@@ -254,6 +223,10 @@ int Game::getRound() {
 
 Factory** Game::getFactories() {
     return factories->toArray();
+}
+
+Player** Game::getPlayers() {
+	return players->toArray();
 }
 
 bool Game::isGameOver() {
@@ -282,18 +255,19 @@ void Game::saveGame(std::string fileName, LinkedList<std::string> turns) {
     std::ofstream file;
     file.open(fileName);
 	LinkedList<Tile>* initialTilebag = tilebag->getInitailTilebag();
+
     // Writes initial tilebag.
 	file << "<";
-	for(int i = 0; i < initialTilebag->size() - 1; ++i) {
+	for(int i = 0; i < 200; ++i) {
 		file << initialTilebag->at(i);
-		if(i < initialTilebag->size() - 1) {
+		if(i < 200) {
 			file << ", ";
 		}
 	}
 	file << ">";
 	// Writes player names.
     for(int i = 0; i < 2; ++i) {
-        Player* player = players.at(i);
+        Player* player = players->at(i);
         file << player->getName() << std::endl;
     }
 	// Writes all turns made.
@@ -345,7 +319,7 @@ void Game::loadGame(std::string fileName) {
 		tilebag->replaceTilebag(newTilebag);
 		// Execute saved turns.
 		for(std::vector<std::string> turn : turns) {
-			playRound(std::stoi(turn[0]), static_cast<Tile>(*turn[1].c_str()), std::stoi(turn[2]));
+			playHand(std::stoi(turn[0]), static_cast<Tile>(*turn[1].c_str()), std::stoi(turn[2]));
 		}
 		std::cout << "Azul game successfully loaded" << std::endl;
 	} else {
@@ -358,7 +332,7 @@ void Game::testingMode(std::string fileName) {
 	// Lists the factories and Tiles within.
 	std::cout << "Factories:" << std::endl;
 	for(int factNum = 0; factNum <= NO_FACTORIES; ++factNum) {
-		Factory* factory = factories.at(factNum);
+		Factory* factory = factories->at(factNum);
 		std::cout << factNum << ": ";
 		std::vector<Tile> tiles = factory->getTiles();
 		for(Tile tile : tiles) {
@@ -368,8 +342,8 @@ void Game::testingMode(std::string fileName) {
 	}
 	// Displays each player's score and mosaics.
 	for(int i = 0; i < 2; ++i) {
-		Player* player = players.at(i);
-		std::cout << "Score for Player " << player->getName() << ": " << getScore(i) << std::endl;
+		Player* player = players->at(i);
+		std::cout << "Score for Player " << player->getName() << ": " << player->getScore() << std::endl;
 		player->displayMosaic();
 	}
 }
