@@ -2,10 +2,9 @@
 #include "UIActionHandler.h"
 #include "Utility.h"
 #include "UI.h"
-
+#include "Game.h"
 
 void UIActionHandler::newGame(){
-    UI* ui = new UI();
     std::string playerOneName, playerTwoName;
 
     prettyPrint("Starting a New Game", PrettyPrint::BOTH);
@@ -17,10 +16,10 @@ void UIActionHandler::newGame(){
     playerTwoName = ui->getUserStringInput();
 }
 
-void UIActionHandler::loadGame(){
-    
-    //Load a game from a save file (possibly needs to access console args)
-
+void UIActionHandler::loadGame(Game* game){
+    prettyPrintUIPrompt("Enter the filename from which load a game");
+    std::string fileName = ui->getUserStringInput();
+    game->loadGame(fileName);
 }
 
 void UIActionHandler::printCredits(){

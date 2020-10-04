@@ -5,7 +5,7 @@
 #include "LinkedList.h"
 
 class Tilebag {
-    public :
+    public:
         Tilebag();
 		~Tilebag();
 
@@ -18,8 +18,16 @@ class Tilebag {
 		// Add tile to the back of the queue.
 		void addTile(Tile tile);
 
+		// Returns initialTilesCopy.
+		LinkedList<Tile>* getInitailTilebag();
+
+		// Replaces tiles in tilebag when loading game
+		void replaceTilebag(LinkedList<Tile>* newTilebag);
+
 	protected:			
 		LinkedList<Tile>* tiles;
+		// Copy of the initial tilebag for save file.
+		LinkedList<Tile>* initialTilebag;
 };
 
 

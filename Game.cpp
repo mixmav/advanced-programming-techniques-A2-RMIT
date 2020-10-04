@@ -235,8 +235,17 @@ bool Game::playHand(int factory, Tile tile, int row)
 	activePlayer = getNextPlayerIndex();
 	return true;
 }
+
+
 // Manav
 
+Player Game::getActivePlayer(){
+	return activePlayer;
+}
+
+Player Game::getNextPlayer(){
+	return players.at(getNextPlayerIndex());
+}
 
 // Micheal
 int Game::getRound() {
@@ -248,11 +257,14 @@ Factory** Game::getFactories() {
 }
 
 bool Game::isGameOver() {
+	// iterates through players.
     for(int i = 0; i < 2; ++i) {
         Player* player = players->at(activePlayer);
         Mosaic* mosaic = player->getMosaic();
+		// iterates through each row for the current player's mosaic.
         for(int row = 0; row < MOSAIC_DIM; ++row) {
             Tile tile = mosaic->getPattern(row, 0);
+			// Checks if entire row is full.
             for(int col = 0; col < MOSAIC_DIM; ++col) {
                 if(mosaic->getPattern(row, col) != tile) {
                    col = MOSAIC_DIM; 
@@ -264,4 +276,100 @@ bool Game::isGameOver() {
         }
     }
     return false;
+}
+
+void Game::saveGame(std::string fileName, LinkedList<std::string> turns) {
+    std::ofstream file;
+    file.open(fileName);
+	LinkedList<Tile>* initialTilebag = tilebag->getInitailTilebag();
+    // Writes initial tilebag.
+	file << "<";
+	for(int i = 0; i < initialTilebag->size() - 1; ++i) {
+		file << initialTilebag->at(i);
+		if(i < initialTilebag->size() - 1) {
+			file << ", ";
+		}
+	}
+	file << ">";
+	// Writes player names.
+    for(int i = 0; i < 2; ++i) {
+        Player* player = players.at(i);
+        file << player->getName() << std::endl;
+    }
+	// Writes all turns made.
+	for(int i = 0; i < turns.size() - 1; ++i) {
+		file << turns.at(i);
+		if(i < turns.size() - 1) {
+			file << std::endl;
+		}
+	}
+    file.close();
+	std::cout << "Game successfully saved to '" << fileName << "'" << std::endl;
+}
+
+void Game::loadGame(std::string fileName) {
+	std::string string;
+	LinkedList<Tile>* newTilebag = new LinkedList<Tile>();
+    std::vector<char> tiles;
+    std::vector<std::vector<std::string>> turns;
+	std::ifstream file(fileName);
+	if(file.is_open()) {
+		// Loops through save file as input.
+		while(file >> string) {
+			if(string.compare(0, 4, "turn") != 0) {
+				// Removes front '<' character.
+				if(string.compare(0, 1, "<") == 0) {
+					string.erase(0, 1);
+				}
+				// Removes ',' and '>' at end.
+				string.pop_back();
+				tiles.push_back(*string.c_str());    
+			} else {
+				std::vector<std::string> turn;
+				std::string string;
+				// Loops through the 3 args.
+				for(int i = 0; i < 3; ++i) {
+					file >> string;
+					turn.push_back(string);
+				}
+				turns.push_back(turn);
+			}
+		}
+		// Converts chars to Tiles.
+		int i = 0;
+		for(char tile : tiles) {
+			Tile* t = new Tile(static_cast<Tile>(tile));
+			newTilebag->insert(t, i);
+			++i;
+		}
+		tilebag->replaceTilebag(newTilebag);
+		// Execute saved turns.
+		for(std::vector<std::string> turn : turns) {
+			playRound(std::stoi(turn[0]), static_cast<Tile>(*turn[1].c_str()), std::stoi(turn[2]));
+		}
+		std::cout << "Azul game successfully loaded" << std::endl;
+	} else {
+		std::cout << "No file by the name: " << fileName << std::endl;
+	}
+}
+
+void Game::testingMode(std::string fileName) {
+	loadGame(fileName);
+	// Lists the factories and Tiles within.
+	std::cout << "Factories:" << std::endl;
+	for(int factNum = 0; factNum <= NO_FACTORIES; ++factNum) {
+		Factory* factory = factories.at(factNum);
+		std::cout << factNum << ": ";
+		std::vector<Tile> tiles = factory->getTiles();
+		for(Tile tile : tiles) {
+			std::cout << tile << " ";
+		}
+		std::cout << std::endl;
+	}
+	// Displays each player's score and mosaics.
+	for(int i = 0; i < 2; ++i) {
+		Player* player = players.at(i);
+		std::cout << "Score for Player " << player->getName() << ": " << getScore(i) << std::endl;
+		player->displayMosaic();
+	}
 }

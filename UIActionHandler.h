@@ -4,11 +4,14 @@ class UIActionHandler {
 		void newGame();
 
 		// Loads a game from a save file
-		void loadGame();
+		void loadGame(Game* game);
 
 		// Prints the name of the developers
 		void printCredits();
 
 		// Exits the game
 		void quit();
+	
+	private:
+		UI* ui = new UI();
 };

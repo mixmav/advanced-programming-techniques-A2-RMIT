@@ -11,5 +11,5 @@ class UI {
 
         //Dispatches the corresponding menu action based on the input
         //Returns false if an invalid selection was made
-        bool dispatchMenuAction(int input);
+        bool dispatchMenuAction(int input, Game* game);
 };
