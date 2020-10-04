@@ -4,6 +4,8 @@
 #include "UIActionHandler.h"
 #include "Utility.h"
 
+#include "Game.h"
+
 void UI::printMenu(){
     
     prettyPrint("Welcome to Azul!", PrettyPrint::UNDERLINE);
@@ -76,7 +78,7 @@ std::string UI::getUserStringInput(){
     return input;
 }
 
-bool UI::dispatchMenuAction(int input){
+bool UI::dispatchMenuAction(int input, Game* game){
     UIActionHandler* uiActionHandler = new UIActionHandler();
 
 	switch (input)
@@ -91,7 +93,7 @@ bool UI::dispatchMenuAction(int input){
         case 2: {
             //Load Game
 
-			uiActionHandler->loadGame();
+			uiActionHandler->loadGame(game);
 
             return true;
         };

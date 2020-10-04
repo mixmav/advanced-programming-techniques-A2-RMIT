@@ -202,38 +202,43 @@ void Game::loadGame(std::string fileName) {
     std::vector<char> tiles;
     std::vector<std::vector<std::string>> turns;
 	std::ifstream file(fileName);
-	// Loops through save file as input.
-    while(file >> string) {
-        if(string.compare(0, 4, "turn") != 0) {
-			// Removes front '<' character.
-            if(string.compare(0, 1, "<") == 0) {
-                string.erase(0, 1);
-            }
-			// Removes ',' and '>' at end.
-            string.pop_back();
-            tiles.push_back(*string.c_str());    
-        } else {
-            std::vector<std::string> turn;
-            std::string string;
-			// Loops through the 3 args.
-            for(int i = 0; i < 3; ++i) {
-                file >> string;
-                turn.push_back(string);
-            }
-            turns.push_back(turn);
-        }
-    }
-	// Converts chars to Tiles.
-	int i = 0;
-    for(char tile : tiles) {
-		Tile* t = new Tile(static_cast<Tile>(tile));
-		newTilebag->insert(t, i);
-		++i;
-    }
-	tilebag->replaceTilebag(newTilebag);
-	// Execute saved turns.
-	for(std::vector<std::string> turn : turns) {
-		playRound(std::stoi(turn[0]), static_cast<Tile>(*turn[1].c_str()), std::stoi(turn[2]));
+	if(file.is_open()) {
+		// Loops through save file as input.
+		while(file >> string) {
+			if(string.compare(0, 4, "turn") != 0) {
+				// Removes front '<' character.
+				if(string.compare(0, 1, "<") == 0) {
+					string.erase(0, 1);
+				}
+				// Removes ',' and '>' at end.
+				string.pop_back();
+				tiles.push_back(*string.c_str());    
+			} else {
+				std::vector<std::string> turn;
+				std::string string;
+				// Loops through the 3 args.
+				for(int i = 0; i < 3; ++i) {
+					file >> string;
+					turn.push_back(string);
+				}
+				turns.push_back(turn);
+			}
+		}
+		// Converts chars to Tiles.
+		int i = 0;
+		for(char tile : tiles) {
+			Tile* t = new Tile(static_cast<Tile>(tile));
+			newTilebag->insert(t, i);
+			++i;
+		}
+		tilebag->replaceTilebag(newTilebag);
+		// Execute saved turns.
+		for(std::vector<std::string> turn : turns) {
+			playRound(std::stoi(turn[0]), static_cast<Tile>(*turn[1].c_str()), std::stoi(turn[2]));
+		}
+		std::cout << "Azul game successfully loaded" << std::endl;
+	} else {
+		std::cout << "No file by the name: " << fileName << std::endl;
 	}
 }
 
