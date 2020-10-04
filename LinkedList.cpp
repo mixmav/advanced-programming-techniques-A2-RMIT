@@ -167,12 +167,12 @@ template<class T> bool LinkedList<T>::Iterator::hasLast()
 	return node->last != nullptr;
 }
 
-template<class T> LinkedList<T>::Iterator LinkedList<T>::begin()
+template<class T> typename LinkedList<T>::Iterator LinkedList<T>::begin()
 {
 	return Iterator(head);
 }
 
-template<class T> LinkedList<T>::Iterator LinkedList<T>::end()
+template<class T> typename LinkedList<T>::Iterator LinkedList<T>::end()
 {
 	return Iterator(tail);
 }
