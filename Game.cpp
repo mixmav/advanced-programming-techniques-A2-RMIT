@@ -38,7 +38,7 @@ int Game::getScore(int player)
 			score += 7;
 	}
 
-	// TODO: bonus for filled colours
+	// TODO: bonus for filled colours	
 
 	// Calculate bonus: Crosspoints and regular tiles
 	for (int y = 0; y < MOSAIC_DIM; y++)
@@ -124,8 +124,17 @@ bool Game::playRound(int factory, Tile tile, int row)
 	activePlayer = nextPlayer;
 	return true;
 }
+
+
 // Manav
 
+Player Game::getActivePlayer(){
+	return activePlayer;
+}
+
+Player Game::getNextPlayer(){
+	return players.at(getNextPlayerIndex());
+}
 
 // Micheal
 int Game::getTurn() {

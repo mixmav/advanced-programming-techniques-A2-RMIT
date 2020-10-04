@@ -32,6 +32,11 @@ class Game {
 		bool playRound(int factory, Tile tile, int row);
 		
     // Manav
+	//Get the active player and return the corresponding player object
+	Player getActivePlayer();
+
+	//Get the next player and return the corresponding player object
+	Player getNextPlayer();
 
 
     // Micheal
