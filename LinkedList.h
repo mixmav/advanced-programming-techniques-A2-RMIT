@@ -77,6 +77,9 @@ template <class T> class LinkedList
 
 		// Creates an iterator that initially points to the last element of LinkedList.
 		Iterator end();
+
+		// Returns the items of this list as an array.
+		T** toArray();
 		
 	protected:
 		Node *head = nullptr, *tail = nullptr;

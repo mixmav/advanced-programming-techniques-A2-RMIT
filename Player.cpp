@@ -5,6 +5,7 @@
 Player::Player(std::string name) {
     this->name = name;
     mosaic = new Mosaic();
+	score = 0;
 }
 
 Player::~Player() {
@@ -13,14 +14,9 @@ Player::~Player() {
 }
 
 Player::Player(const Player& other) :
-    name(other.name)
+    name(other.name), score(other.score)
 {
     mosaic = new Mosaic(*other.mosaic);
-}
-
-Player::Player(const Player&& other) {
-    name = other.name;
-    mosaic = other.mosaic;
 }
 
 std::string Player::getName() {
@@ -57,4 +53,14 @@ void Player::displayMosaic() {
         std::cout << char(mosaic->getBrokenTile(i)) << " ";
     }
     std::cout << std::endl;
+}
+
+int Player::getScore()
+{
+	return score;
+}
+
+void Player::addScore(int score)
+{
+	this->score += score;
 }
