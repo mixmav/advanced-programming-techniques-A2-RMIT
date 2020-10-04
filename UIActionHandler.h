@@ -1,3 +1,6 @@
+#ifndef UIACTIONHANDLER_HEADER
+#define UIACTIONHANDLER_HEADER
+
 class UIActionHandler {
     public :
 		// Starts a new game
@@ -15,3 +18,4 @@ class UIActionHandler {
 	private:
 		UI* ui = new UI();
 };
+#endif

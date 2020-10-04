@@ -1,3 +1,5 @@
+#ifndef PLAYER_HEADER
+#define PLAYER_HEADER
 #include <string>
 
 class Mosaic;
@@ -31,3 +33,5 @@ class Player {
         Mosaic* mosaic;
 		int score;
 };
+
+#endif

@@ -7,10 +7,9 @@
 #include "Types.h"
 #include "Tilebag.h"
 #include "Mosaic.h"
+
 #include <iostream>
 #include <fstream>
-#include "Tilebag.h"
-
 #include <vector>
 #include <string>
 

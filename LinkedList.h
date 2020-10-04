@@ -1,3 +1,6 @@
+#ifndef LINKEDLIST_HEADER
+#define LINKEDLIST_HEADER
+
 template <class T> class LinkedList
 {
 	class Node
@@ -86,3 +89,4 @@ template <class T> class LinkedList
 		int length = 0;
 
 };
+#endif

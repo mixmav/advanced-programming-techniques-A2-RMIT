@@ -1,3 +1,6 @@
+#ifndef UI_HEADER
+#define UI_HEADER
+#include "Game.h"
 class UI {
     public :
         //Print the main menu
@@ -13,3 +16,5 @@ class UI {
         //Returns false if an invalid selection was made
         bool dispatchMenuAction(int input, Game* game);
 };
+
+#endif
