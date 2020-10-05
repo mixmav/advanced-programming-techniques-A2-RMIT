@@ -1,5 +1,6 @@
 #include "iostream"
 #include "Tilebag.h"
+#include "LinkedList.h"
 #include "Types.h"
 
 Tilebag::Tilebag()

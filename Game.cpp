@@ -1,10 +1,11 @@
-#include "Game.h"
-#include "Mosaic.h"
 #include "LinkedList.h"
+#include "Mosaic.h"
+#include "Game.h"
 #include <string>
 #include <vector>
 
 // Faraz
+
 void Game::applyEndgameBonuses()
 {
 	for (LinkedList<Player>::Iterator i = players->begin(); i.hasNext(); i.next())
@@ -219,6 +220,7 @@ Player Game::getNextPlayer(){
 }
 
 // Micheal
+
 int Game::getRound() {
     return round;
 }

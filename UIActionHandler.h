@@ -1,6 +1,9 @@
 #ifndef UIACTIONHANDLER_HEADER
 #define UIACTIONHANDLER_HEADER
 
+#include "UI.h"
+#include "Game.h"
+
 class UIActionHandler {
     public :
 		// Starts a new game
