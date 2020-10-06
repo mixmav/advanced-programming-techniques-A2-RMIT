@@ -3,22 +3,25 @@
 
 template <class T> class LinkedList
 {
-	class Node
-	{
-		friend class LinkedList;
-		friend class Iterator;
-
-		// Create a new instance of Node using data, last node, and next node, specify nullptr if none.
-		Node(T* data, Node* last, Node* next);
-
-		// Destructs Node and attaches nodes around it to keep the chain intact.
-		~Node();
-
-		T* data = nullptr;
-		Node *next = nullptr, *last = nullptr;
-	};
-
 	public:
+		class Node
+		{
+			friend class LinkedList;
+			friend class Iterator;
+
+			// Create a new instance of Node using data, last node, and next node, specify nullptr if none.
+			Node(T* data, Node* last, Node* next);
+
+			// Destructs Node and attaches nodes around it to keep the chain intact.
+			~Node();
+
+			// Detaches this node and reattaches adjacent nodes.
+			void detach();
+
+			T* data = nullptr;
+			Node *next = nullptr, *last = nullptr;
+		};
+
 		class Iterator
 		{	
 			friend class LinkedList;
@@ -181,7 +184,7 @@ template<class T> void LinkedList<T>::remove(T* item)
 {
 	for (Node* i = head; i != nullptr; i = i->next)
 		if (item == i->data)
-			delete i;
+			i->detach();
 
 	length--;
 }
@@ -193,7 +196,7 @@ template<class T> void LinkedList<T>::removeAt(int index)
 	if (n == nullptr)
 		throw - 1;
 
-	delete n;
+	n->detach();
 	length--;
 }
 
@@ -206,14 +209,18 @@ template<class T> LinkedList<T>::Node::Node(T* item, Node* last, Node* next)
 
 template<class T> LinkedList<T>::Node::~Node()
 {
+	data = nullptr;
+	detach();
+	last = next = nullptr;
+}
+
+template<class T> void LinkedList<T>::Node::detach()
+{
 	if (next != nullptr)
 		next->last = last;
 
 	if (last != nullptr)
 		last->next = next;
-
-	last = next = nullptr;
-	data = nullptr;
 }
 
 template<class T> LinkedList<T>::Iterator::Iterator(Node* node)
@@ -228,6 +235,8 @@ template<class T> LinkedList<T>::Iterator::~Iterator()
 
 template<class T> T* LinkedList<T>::Iterator::get()
 {
+	if (node == nullptr)
+		return nullptr;
 	return node->data;
 }
 
