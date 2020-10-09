@@ -8,6 +8,8 @@
 #include "Tilebag.h"
 #include "Mosaic.h"
 
+#include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 
@@ -43,17 +45,37 @@ class Game {
 		bool concludeRound();
 		
     // Manav
+		
+		//Get the active player and return the corresponding player object
+		Player getActivePlayer();
+
+		//Get the next player and return the corresponding player object
+		Player getNextPlayer();
 
 
     // Micheal
 		
 		// Returns the current turn.
 		int getRound();
+
 		// Checks each player's Mosaics' storage for the game over condition, being a player having a full row.
 		bool isGameOver();
+
 		// Returns the list of factories.
-    	Factory** getFactories();
+    	LinkedList<Factory> getFactories();
+
+		// Returns the list of players.
+		LinkedList<Player> getPlayers();
     
+		// Saves Player names, initial Tile bag and turns to file.
+		void saveGame(std::string fileName, LinkedList<std::string> turns);
+
+		// Read file and 'replay game'
+		void loadGame(std::string fileName);
+
+		// Testing Mode.
+		void testingMode(std::string fileName);
+
     private:
     // Faraz
 
@@ -62,12 +84,13 @@ class Game {
 
     	LinkedList<Player>* players;
 		LinkedList<Factory>* factories;
-		int round;
-		int activePlayer;
-		int firstPlayer;
-		Tilebag* tilebag;
+		int round = 0;
+		int activePlayer = 0;
+		int firstPlayer = 0;
 
     // Manav
+
+		Tilebag* tilebag;
 
     // Micheal
     

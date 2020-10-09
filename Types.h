@@ -38,4 +38,11 @@ const Tile DEFAULT_TILES[5][5] =
 	{ TILE_YELLOW, TILE_RED, TILE_BLACK, TILE_LIGHT_BLUE, TILE_DARK_BLUE, }, // splendid, uhm...
 };
 
+struct PlayHandResult
+{
+	int factory;
+	Tile tile;
+	int row;
+};
+
 #endif

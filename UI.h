@@ -1,3 +1,7 @@
+#ifndef UI_HEADER
+#define UI_HEADER
+#include "Game.h"
+#include "Types.h"
 class UI {
     public :
         //Print the main menu
@@ -11,5 +15,12 @@ class UI {
 
         //Dispatches the corresponding menu action based on the input
         //Returns false if an invalid selection was made
-        bool dispatchMenuAction(int input, Game* game);
+        Game* dispatchMenuAction(int input);
+
+		
+		PlayHandResult promptPlayerHand(Game* game, bool retry);
+
+		void displayRoundScores(Game* game);
 };
+
+#endif

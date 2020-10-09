@@ -3,9 +3,10 @@
 
 #include "Types.h"
 #include "LinkedList.h"
+#include <vector>
 
 class Tilebag {
-    public :
+    public:
         Tilebag();
 		~Tilebag();
 
@@ -18,8 +19,16 @@ class Tilebag {
 		// Add tile to the back of the queue.
 		void addTile(Tile tile);
 
+		// Returns initialTilesCopy.
+		LinkedList<Tile>* getInitailTilebag();
+
+		// Replaces tiles in tilebag when loading game
+		void replaceTilebag(LinkedList<Tile>* newTilebag);
+
 	protected:			
-		LinkedList<Tile>* tiles;
+		std::vector<Tile>* tiles;
+		// Copy of the initial tilebag for save file. (+ idk man looks kinda redundant to me)
+		LinkedList<Tile>* initialTilebag;
 };
 
 

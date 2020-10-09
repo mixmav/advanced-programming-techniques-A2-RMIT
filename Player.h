@@ -1,3 +1,5 @@
+#ifndef PLAYER_HEADER
+#define PLAYER_HEADER
 #include <string>
 
 class Mosaic;
@@ -10,6 +12,9 @@ class Player {
 
         // Deep Copy Constructor
         Player(const Player& other);
+
+        // Move Constructor
+        Player(const Player&& other);
 
         // Getters/Setters
         std::string getName();
@@ -28,3 +33,5 @@ class Player {
         Mosaic* mosaic;
 		int score;
 };
+
+#endif

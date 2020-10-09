@@ -4,25 +4,37 @@
 #include "UI.h"
 #include "Game.h"
 
-void UIActionHandler::newGame(){
-    std::string playerOneName, playerTwoName;
+UIActionHandler::~UIActionHandler()
+{
+    this->ui = nullptr;
+}
+
+Game* UIActionHandler::newGame()
+{
+    std::vector<std::string> playerNames = std::vector<std::string>();
 
     prettyPrint("Starting a New Game", PrettyPrint::BOTH);
 
     prettyPrintUIPrompt("Enter a name for player 1");
-    playerOneName = ui->getUserStringInput();
+    playerNames.push_back(ui->getUserStringInput());
 
     prettyPrintUIPrompt("Enter a name for player 2");
-    playerTwoName = ui->getUserStringInput();
+    playerNames.push_back(ui->getUserStringInput());
+
+	return new Game(playerNames);
 }
 
-void UIActionHandler::loadGame(Game* game){
+Game* UIActionHandler::loadGame()
+{
     prettyPrintUIPrompt("Enter the filename from which load a game");
     std::string fileName = ui->getUserStringInput();
+	Game* game = new Game({ "A", "B" });
     game->loadGame(fileName);
+	return game;
 }
 
-void UIActionHandler::printCredits(){
+void UIActionHandler::printCredits()
+{
     
     prettyPrint("This game was designed and developed by these awesome people", PrettyPrint::BOTH);
 
@@ -37,9 +49,12 @@ void UIActionHandler::printCredits(){
     prettyPrint("Name: Manav Gadhoke", PrettyPrint::OVERLINE);
     prettyPrint("Student ID: S3783375");
     prettyPrint("Email: s3783375@student.rmit.edu.au", PrettyPrint::UNDERLINE);
+
+	ui->printMenu();
 }
 
-void UIActionHandler::quit(){
+void UIActionHandler::quit()
+{
     prettyPrint("Goodbye", PrettyPrint::BOTH);
     exit(EXIT_SUCCESS);
 }

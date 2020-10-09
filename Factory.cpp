@@ -45,3 +45,9 @@ void Factory::addTiles(std::vector<Tile>::iterator tiles_start, std::vector<Tile
 	for (std::vector<Tile>::iterator i = tiles_start; i < tiles_end; i++)
 		tiles.push_back(*i);
 }
+
+void Factory::addTiles(Tile* tiles_start, int _size)
+{
+	for (Tile* i = tiles_start; i < tiles_start + _size; i++)
+		tiles.push_back(*i);
+}
