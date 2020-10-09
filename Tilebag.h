@@ -3,6 +3,7 @@
 
 #include "Types.h"
 #include "LinkedList.h"
+#include <vector>
 
 class Tilebag {
     public:
@@ -25,8 +26,8 @@ class Tilebag {
 		void replaceTilebag(LinkedList<Tile>* newTilebag);
 
 	protected:			
-		LinkedList<Tile>* tiles;
-		// Copy of the initial tilebag for save file.
+		std::vector<Tile>* tiles;
+		// Copy of the initial tilebag for save file. (+ idk man looks kinda redundant to me)
 		LinkedList<Tile>* initialTilebag;
 };
 

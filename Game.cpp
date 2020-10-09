@@ -70,6 +70,8 @@ Game::Game(std::vector<std::string> players)
 	for (int i = 0; i < int(players.size()); i++)
 		this->players->push_back(new Player(players.at(i)));
 
+	this->players->at(0)->getMosaic()->addBrokenTile(TILE_FIRST_PLAYER);
+
 	this->tilebag = new Tilebag();
 	this->factories = new LinkedList<Factory>();
 	this->factories->push_back(new Factory());
@@ -95,7 +97,7 @@ int Game::findFirstPlayerIndex()
 	for (LinkedList<Player>::Iterator p = players->begin(); p.hasNext(); p.next())
 	{
 		// TODO: THIS NEEDS TO CHANGE
-		for (int i = 0; i < BROKEN_TILES_SIZE; i++)
+		for (int i = 0; i < p.get()->getMosaic()->getBrokenTileCount(); i++)
 			if (p.get()->getMosaic()->getBrokenTile(i) == TILE_FIRST_PLAYER)
 				return index;
 		index++;
@@ -163,6 +165,9 @@ bool Game::concludeRound()
 		p->addScore(broken);
 	}
 
+	for (LinkedList<Factory>::Iterator n = factories->begin().next(); n.hasNext(); n.next())
+		n.get()->addTiles(tilebag->drawTiles(4), 4);
+
 	if (activePlayer == firstPlayer)
 	{
 		activePlayer = firstPlayer = findFirstPlayerIndex();
@@ -185,6 +190,12 @@ bool Game::playHand(int factory, Tile tile, int row)
 	// The tiles can only be fitted in a row with empty slots, no different tiles on the pattern, and no same tiles on the wall.
 	if (mos->getPattern(row, 0) != TILE_NONE && mos->getPattern(row, 0) != tile && mos->getPattern(row, row) != TILE_NONE)
 		return false;
+
+	if (factories->at(0)->getTiles().size())
+	{
+		factories->at(0)->addTiles(new Tile[1] { TILE_FIRST_PLAYER }, 1);
+		mos->removeBrokenTile(TILE_FIRST_PLAYER);
+	}
 
 	if (tiles.back() == TILE_FIRST_PLAYER)
 	{
@@ -225,31 +236,29 @@ int Game::getRound() {
     return round;
 }
 
-Factory** Game::getFactories() {
-    return factories->toArray();
+LinkedList<Factory> Game::getFactories() {
+    return *factories;
 }
 
-Player** Game::getPlayers() {
-	return players->toArray();
+LinkedList<Player> Game::getPlayers() {
+	return *players;
 }
 
 bool Game::isGameOver() {
 	// iterates through players.
-    for(int i = 0; i < 2; ++i) {
-        Player* player = players->at(activePlayer);
+    for (LinkedList<Player>::Iterator i = players->begin(); i.hasNext(); i.next()) 
+	{
+        Player* player = i.get();
         Mosaic* mosaic = player->getMosaic();
 		// iterates through each row for the current player's mosaic.
-        for(int row = 0; row < MOSAIC_DIM; ++row) {
-            Tile tile = mosaic->getPattern(row, 0);
-			// Checks if entire row is full.
-            for(int col = 0; col < MOSAIC_DIM; ++col) {
-                if(mosaic->getPattern(row, col) != tile) {
-                   col = MOSAIC_DIM; 
-                }
-                if(col == MOSAIC_DIM - 1) {
-                    return true;
-                }
-            }
+        for (int y = 0; y < MOSAIC_DIM; y++) 
+		{
+            bool isFull = true;
+			for (int x = 0; x < MOSAIC_DIM; x++)
+				isFull &= mosaic->getWall(y, x) != TILE_NONE;
+			
+			if (isFull)
+				return true;
         }
     }
     return false;
@@ -285,7 +294,8 @@ void Game::saveGame(std::string fileName, LinkedList<std::string> turns) {
 	std::cout << "Game successfully saved to '" << fileName << "'" << std::endl;
 }
 
-void Game::loadGame(std::string fileName) {
+void Game::loadGame(std::string fileName) 
+{
 	std::string string;
 	LinkedList<Tile>* newTilebag = new LinkedList<Tile>();
     std::vector<char> tiles;

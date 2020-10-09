@@ -44,6 +44,10 @@ Tile Mosaic::getBrokenTile(int i) {
     return brokenTiles[i];
 }
 
+int Mosaic::getBrokenTileCount() {
+	return brokenTiles.size();
+}
+
 void Mosaic::setPattern(Tile colour, int row, int col) {
     pattern[row][col] = colour;
 }

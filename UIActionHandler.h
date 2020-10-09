@@ -6,11 +6,13 @@
 
 class UIActionHandler {
     public :
+		~UIActionHandler();
+
 		// Starts a new game
-		void newGame();
+		Game* newGame();
 
 		// Loads a game from a save file
-		void loadGame(Game* game);
+		Game* loadGame();
 
 		// Prints the name of the developers
 		void printCredits();

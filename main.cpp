@@ -7,14 +7,17 @@
 
 int main(int argc, char** argv) {
     // Used to store turns made by players.
-    // LinkedList<std::string>* turns = new LinkedList<std::string>();
-    std::vector<std::string> names = {"A", "B"};
-    Game* game = new Game(names);
     
-    for(int i = 0; i < argc; ++i) {
+	Game* game = nullptr;
+	bool isTesting = false;
+    for (int i = 0; i < argc; ++i) 
+	{
         std::string s;
         s = argv[i];
-        if(s.compare("-t") == 0) {
+        if(s.compare("-t") == 0) 
+		{
+			isTesting = true;
+			game = new Game({ "A", "B" });
             game->testingMode(argv[i + 1]);
         }
     }
@@ -22,15 +25,21 @@ int main(int argc, char** argv) {
     UI* ui = new UI();
     ui->printMenu();
     
-    while (true){
-        // Check if  a valid selection was made
+	if (!isTesting)
+	{
+		// Get the Game object from UI handler based on user choice.
+		while (!(game = ui->dispatchMenuAction(ui->getUserIntInput()))) ;
+	}
 
-        if(ui->dispatchMenuAction(ui->getUserIntInput(), game)){
-            break;
-        }
+	while (!game->isGameOver())
+	{	
+		PlayHandResult hand = ui->promptPlayerHand(game, false);
+		while (game->playHand(hand.factory, hand.tile, hand.row))
+			hand = ui->promptPlayerHand(game, true);
 
-        // If not, ask for an input again
-    }
+		if (game->concludeRound())
+			ui->displayRoundScores(game);
+	}
 
     return EXIT_SUCCESS;
 }

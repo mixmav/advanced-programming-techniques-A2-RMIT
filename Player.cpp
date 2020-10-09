@@ -55,7 +55,7 @@ void Player::displayMosaic() {
         std::cout << std::endl;
     }
     std::cout << "broken: ";
-    for(int i = 0; i < BROKEN_TILES_SIZE; ++i) {
+    for(int i = 0; i < mosaic->getBrokenTileCount(); ++i) {
         std::cout << char(mosaic->getBrokenTile(i)) << " ";
     }
     std::cout << std::endl;

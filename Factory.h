@@ -24,6 +24,9 @@ class Factory
 
 	// Adds all tiles within range into this factory.
 	void addTiles(std::vector<Tile>::iterator tiles_start, std::vector<Tile>::iterator tiles_end);
+
+	// Adds all tiles within range into this factory.
+	void addTiles(Tile* tiles_start, int _size);
     
     private:
     	std::vector<Tile> tiles;

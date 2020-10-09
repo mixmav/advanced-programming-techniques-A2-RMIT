@@ -17,6 +17,7 @@ class Mosaic {
         Tile getPattern(int row, int col);
         Tile getWall(int row, int col);
         Tile getBrokenTile(int i);
+		int getBrokenTileCount();
         
         void setPattern(Tile colour, int row, int col);
         void setWall(Tile colour, int row, int col);

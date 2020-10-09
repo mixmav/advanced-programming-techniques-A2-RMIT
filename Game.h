@@ -62,10 +62,10 @@ class Game {
 		bool isGameOver();
 
 		// Returns the list of factories.
-    	Factory** getFactories();
+    	LinkedList<Factory> getFactories();
 
 		// Returns the list of players.
-		Player** getPlayers();
+		LinkedList<Player> getPlayers();
     
 		// Saves Player names, initial Tile bag and turns to file.
 		void saveGame(std::string fileName, LinkedList<std::string> turns);
@@ -84,9 +84,9 @@ class Game {
 
     	LinkedList<Player>* players;
 		LinkedList<Factory>* factories;
-		int round;
-		int activePlayer;
-		int firstPlayer;
+		int round = 0;
+		int activePlayer = 0;
+		int firstPlayer = 0;
 
     // Manav
 

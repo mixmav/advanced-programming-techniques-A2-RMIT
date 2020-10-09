@@ -34,10 +34,10 @@ template <class T> class LinkedList
 				~Iterator();
 
 				// Moves to the next element and returns its value.
-				T* next();
+				LinkedList<T>::Iterator next();
 
 				// Moves to the last element and returns its value.
-				T* last();
+				LinkedList<T>::Iterator last();
 
 				// Determines whether an element exists after this one.
 				// Can detect the end of the list.
@@ -240,20 +240,18 @@ template<class T> T* LinkedList<T>::Iterator::get()
 	return node->data;
 }
 
-template<class T> T* LinkedList<T>::Iterator::next()
+template<class T> typename LinkedList<T>::Iterator LinkedList<T>::Iterator::next()
 {	
 	if (!hasNext())
 		return nullptr;
-	node = node->next;
-	return node->data;
+	return node = node->next;
 }
 
-template<class T> T* LinkedList<T>::Iterator::last()
+template<class T> typename LinkedList<T>::Iterator LinkedList<T>::Iterator::last()
 {
 	if (!hasLast())
 		return nullptr;
-	node = node->last;
-	return node->data;
+	return node = node->last;
 }
 
 template<class T> bool LinkedList<T>::Iterator::hasNext()
